@@ -120,3 +120,137 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Pomodoro circular progress ring and button pulse */
+@layer utilities {
+  /* color variables for pomodoro (override if desired) */
+  :root {
+    --pomodoro-ring: #f97316; /* orange-500 */
+    --pomodoro-glow: rgba(249, 115, 22, 0.12); /* soft orange glow */
+  }
+  .dark {
+    --pomodoro-ring: #fb923c; /* orange-400 for dark mode */
+    --pomodoro-glow: rgba(251, 146, 60, 0.1);
+  }
+
+  .progress-ring {
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+  }
+
+  .progress-ring svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .progress-ring__circle {
+    transition: stroke-dashoffset 0.45s linear, stroke 0.25s ease;
+    transform-origin: center;
+  }
+
+  /* background track */
+  .progress-ring__bg {
+    stroke: rgba(255, 255, 255, 0.06);
+    opacity: 0.16;
+  }
+
+  /* the moving stroke */
+  .progress-ring__circle.stroke-accent {
+    stroke: var(--pomodoro-ring);
+    /* subtler glow */
+    filter: drop-shadow(0 6px 14px var(--pomodoro-glow));
+  }
+
+  /* Small pulsing ring for buttons */
+  @keyframes ring-pulse {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    70% {
+      opacity: 0.2;
+    }
+    100% {
+      transform: scale(1.4);
+      opacity: 0;
+    }
+  }
+
+  .button-ring {
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+  }
+
+  .button-ring::before {
+    content: "";
+    position: absolute;
+    width: 110%;
+    height: 110%;
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    box-sizing: border-box;
+    pointer-events: none;
+  }
+
+  .button-ring.pulse::before {
+    border-color: var(--pomodoro-ring);
+    animation: ring-pulse 1.8s ease-out infinite; /* slower, subtler */
+  }
+
+  /* rotate animation for the whole svg */
+  @keyframes ring-rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .progress-ring.pulse svg {
+    animation: ring-rotate 4s linear infinite; /* slower rotation */
+  }
+
+  /* explicit outer ring element (for visibility) */
+  .outer-ring {
+    position: absolute;
+    inset: -6%;
+    border-radius: 9999px;
+    border: 3px solid rgba(255, 255, 255, 0.02);
+    pointer-events: none;
+    opacity: 0;
+    transform-origin: center;
+    transition: opacity 160ms ease;
+  }
+
+  .outer-ring.animate {
+    opacity: 1;
+    border-color: var(--pomodoro-ring);
+    animation: ring-rotate 4s linear infinite;
+    box-shadow: 0 0 12px 4px var(--pomodoro-glow);
+  }
+
+  /* explicit button pulse element */
+  .button-pulse {
+    position: absolute;
+    inset: -6%;
+    border-radius: 9999px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 160ms ease;
+  }
+
+  .button-pulse.animate {
+    opacity: 1;
+    animation: ring-pulse 2s ease-out infinite;
+    box-shadow: 0 0 10px 4px var(--pomodoro-glow);
+    border-radius: 9999px;
+  }
+}

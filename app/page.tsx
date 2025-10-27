@@ -2,6 +2,7 @@
 
 import { AppIcon } from "@/components/appIcon";
 import { FullscreenModal } from "@/components/fullscreenModal";
+import { Pomodoro } from "@/components/widgets/Pomodoro";
 import { BarChart3, Brain, Check, Clock, Settings, Timer } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -35,7 +36,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="w-full max-w-xs sm:max-w-sm grid grid-cols-3 gap-6 place-items-center">
+    <div className="w-full max-w-xs sm:max-w-sm flex flex-row flex-wrap gap-6 items-center justify-center">
       {widgets.map((w) => (
         <AppIcon
           key={w.name}
@@ -52,9 +53,7 @@ export default function HomePage() {
         title={activeWidget ?? ""}
       >
         <div className="flex items-center justify-center h-full">
-          <p className="text-lg text-center">
-            Contenu du widget <b>{activeWidget}</b>
-          </p>
+          {activeWidget === "Pomodoro" && <Pomodoro />}
         </div>
       </FullscreenModal>
     </div>
