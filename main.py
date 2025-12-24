@@ -20,15 +20,15 @@ class HomeFrame(tk.Frame):
         ).pack(pady=(30, 20))
         tk.Button(
             self,
-            text="⏱",
+            text="⏱ Pomodoro",
             command=lambda: show_frame("pomodoro"),
-            **styles["icon_button"],
+            **styles["button"],
         ).pack(pady=10)
         tk.Button(
             self,
-            text="📝",
+            text="📝 Notes",
             command=lambda: show_frame("notes"),
-            **styles["icon_button"],
+            **styles["button"],
         ).pack(pady=10)
 
 
@@ -44,9 +44,9 @@ class PomodoroFrame(tk.Frame):
         ).pack(pady=(30, 20))
         tk.Button(
             self,
-            text="⬅",
+            text="Retour",
             command=lambda: show_frame("home"),
-            **styles["icon_button"],
+            **styles["button"],
         ).pack(pady=10)
 
 
@@ -62,9 +62,9 @@ class NotesFrame(tk.Frame):
         ).pack(pady=(30, 20))
         tk.Button(
             self,
-            text="⬅",
+            text="Retour",
             command=lambda: show_frame("home"),
-            **styles["icon_button"],
+            **styles["button"],
         ).pack(pady=10)
 
 
@@ -87,17 +87,6 @@ def main():
             "relief": tk.FLAT,
             "padx": 20,
             "pady": 10,
-        },
-        "icon_button": {
-            "bg": BUTTON_BG,
-            "activebackground": BUTTON_ACTIVE_BG,
-            "fg": TEXT_COLOR,
-            "activeforeground": TEXT_COLOR,
-            "font": ("Helvetica", 22),
-            "relief": tk.FLAT,
-            "padx": 18,
-            "pady": 12,
-            "width": 3,
         },
     }
 
